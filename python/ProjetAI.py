@@ -936,6 +936,7 @@ def Main(maxturn,file,your_group,other_group=0,other_IP='127.0.0.1', verbose=Tru
         
         J1['hub1']['energie'] += J1['hub1']['regeneration']     #régénére le hub en énergie 
         J2['hub2']['energie'] += J2['hub2']['regeneration']     #régénére le hub en énergie
+        charge_board_starting(file)
         maxturn -=1     #décremente le nombre de tour
     charge_board_starting(file)
     print(J1,J2)
