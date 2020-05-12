@@ -910,8 +910,9 @@ def Main(maxturn,file,your_group,other_group=0,other_IP='127.0.0.1', verbose=Tru
     peaks = createpeak(file)            #stock la db de peak reçue
     """
     hub1_maxhp =hphub(file)
+    connect = r_p.create_connection(your_group,other_group,other_IP,verbose)
     while maxturn >0 and J1['hub1']['pts_struct']>0 and J2['hub2']['pts_struct']>0:      #boucle tant qu'on a pas atteint le nombre de tour max ou qu'un des hub est mort
-        connect = r_p.create_connection(your_group,other_group,other_IP,verbose)
+        
         r_p.notify_remote_orders(connect,AI(hub1_maxhp,file))
         order_exec(connect,file,hub1_maxhp)
         
