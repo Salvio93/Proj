@@ -914,7 +914,7 @@ def Main(maxturn,file,your_group,other_group=0,other_IP='127.0.0.1', verbose=Tru
         connect = r_p.create_connection(your_group,other_group,other_IP,verbose)
         r_p.notify_remote_orders(connect,AI(hub1_maxhp,file))
         order_exec(connect,file,hub1_maxhp)
-        r_p.close_connection(connect)
+        
 
         for ship in J1:     #boucle les entités de J1
             if 'state' in J1[ship]:     #si l'entité à le terme state
@@ -938,6 +938,7 @@ def Main(maxturn,file,your_group,other_group=0,other_IP='127.0.0.1', verbose=Tru
         maxturn -=1     #décremente le nombre de tour
     charge_board_starting(file)
     print(J1,J2)
+    r_p.close_connection(connect)
     return J1,J2
 
 def get_AI_sentence(file):
