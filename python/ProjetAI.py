@@ -1666,13 +1666,13 @@ def AI(hub1_maxhp,file):
             orders += '%s:tanker ' % name
         else:
             if data['range'] < data1['range']:
-                orders += 'upgrade:range'
+                orders += 'upgrade:range '
             elif data['storage'] < data1['storage']:
-                orders += 'upgrade:storage'
+                orders += 'upgrade:storage '
             elif data['move'] < data1['move']:
-                orders += 'upgrade:move'
+                orders += 'upgrade:move '
             elif data['regeneration'] < data1['regeneration']:
-                orders += 'upgrade:regeneration'
+                orders += 'upgrade:regeneration '
             else:
                 if J1['hub1']['maxenergy'] < J1['hub1']['energie']:
                     if J1['hub1']['pts_struct'] <= hub1_maxhp*0.65:
