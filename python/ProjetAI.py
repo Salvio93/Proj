@@ -910,12 +910,11 @@ def Main(maxturn,file,your_group,other_group=0,other_IP='127.0.0.1', verbose=Tru
     peaks = createpeak(file)            #stock la db de peak reçue
     """
     hub1_maxhp =hphub(file)
-    connect = r_p.create_connection(your_group,other_group,other_IP,verbose)
     while maxturn >0 and J1['hub1']['pts_struct']>0 and J2['hub2']['pts_struct']>0:      #boucle tant qu'on a pas atteint le nombre de tour max ou qu'un des hub est mort
-        
+        connect = r_p.create_connection(your_group,other_group,other_IP,verbose)
         r_p.notify_remote_orders(connect,AI(hub1_maxhp,file))
         order_exec(connect,file,hub1_maxhp)
-        
+        r_p.close_connection(connect)
 
         for ship in J1:     #boucle les entités de J1
             if 'state' in J1[ship]:     #si l'entité à le terme state
@@ -936,11 +935,9 @@ def Main(maxturn,file,your_group,other_group=0,other_IP='127.0.0.1', verbose=Tru
         
         J1['hub1']['energie'] += J1['hub1']['regeneration']     #régénére le hub en énergie 
         J2['hub2']['energie'] += J2['hub2']['regeneration']     #régénére le hub en énergie
-        charge_board_starting(file)
         maxturn -=1     #décremente le nombre de tour
     charge_board_starting(file)
     print(J1,J2)
-    r_p.close_connection(connect)
     return J1,J2
 
 def get_AI_sentence(file):
@@ -1666,13 +1663,13 @@ def AI(hub1_maxhp,file):
             orders += '%s:tanker ' % name
         else:
             if data['range'] < data1['range']:
-                orders += 'upgrade:range '
+                orders += 'upgrade:range'
             elif data['storage'] < data1['storage']:
-                orders += 'upgrade:storage '
+                orders += 'upgrade:storage'
             elif data['move'] < data1['move']:
-                orders += 'upgrade:move '
+                orders += 'upgrade:move'
             elif data['regeneration'] < data1['regeneration']:
-                orders += 'upgrade:regeneration '
+                orders += 'upgrade:regeneration'
             else:
                 if J1['hub1']['maxenergy'] < J1['hub1']['energie']:
                     if J1['hub1']['pts_struct'] <= hub1_maxhp*0.65:
